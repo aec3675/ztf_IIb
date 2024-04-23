@@ -5,6 +5,7 @@ import emcee
 import corner
 
 SAVE_DIR = './mcmc_fp_results/'
+CHAINS_SAVE_DIR = '../ztf_IIb_data/mcmc_fp_results/mcmc_chains/'
 
 def convert_ztf_err(df):
     l = (df.ztf_mag_lower - df.mag)
@@ -304,7 +305,7 @@ def mcmc_fit(x, y, yerr, priors, p0=[-2,2,-2,0,0,15,-2], r1=True, band='g', sn_n
         p_dict = priors['r']
 
     #setting up backend saving
-    filename = SAVE_DIR+"/mcmc_chains/"+sn_name+"_chains.h5"
+    filename = CHAINS_SAVE_DIR+sn_name+"_chains.h5"
     backend = emcee.backends.HDFBackend(filename)
     backend.reset(nwalkers, ndim)
 
