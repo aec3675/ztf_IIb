@@ -284,7 +284,7 @@ def log_probability_combo(theta, x, y, yerr, priors, r1=True):
 # input: x, y, yerr, [m0,b0,logf0], rise/fall, 
 # output: [[m,ml,mu],[b,bl,bu],[logf,logfl,logfu]], best_fit_model[N,2]
 
-def mcmc_fit(x, y, yerr, priors, p0=[-2,2,-2,0,0,15,-2], r1=True, band='g', sn_name='test'):
+def mcmc_fit(x, y, yerr, priors, p0=[-2,2,-2,0,0,15,-2], r1=True, band='g', sn_name='test', save_flatchains=True):
     np.random.seed(42)
 
     if r1:
@@ -319,6 +319,8 @@ def mcmc_fit(x, y, yerr, priors, p0=[-2,2,-2,0,0,15,-2], r1=True, band='g', sn_n
     sampler.run_mcmc(pos, 1500000, progress=False)
     
     flat_samples = sampler.get_chain(discard=100, thin=15, flat=True)
+    if save_flatchains:
+        np.savetxt(SAVE_DIR+sn_name+'_flatchains.txt', flat_samples) #saves to github repo and not original dir
 
     mcmc_results = []
     #retrieve the 16th/50th/84th percentile for each param and the lower/upper bounds on each
@@ -443,7 +445,7 @@ def do_gw_autocorr_and_plot(mc, sn_band):
     plt.savefig(SAVE_DIR+'/figures/'+sn_band+'_autocorr.png')
     # plt.show()
 
-def mp_fit_sne(idfb):
+def mp_fit_sne(idfb, plot=False):
     str_sn,df,band,r1_bools,p0,pdict_ls = idfb
     print('ON SN : ', str_sn)
 
@@ -459,9 +461,36 @@ def mp_fit_sne(idfb):
     #run mcmc and save bestfit results, chains.h5
     fit, mc = mcmc_fit(x, y, yerr, pdict_ls, p0=p0, r1=r1_bools, band=band, sn_name=save_name)
 
-    #calc and plot autocorr values
-    do_gw_autocorr_and_plot(mc, save_name)
+    if plot:
+        #calc and plot autocorr values
+        do_gw_autocorr_and_plot(mc, save_name)
 
-    #plot mcmc fit over ztf data and corner plots
-    plot_mcmc_results(x, y, yerr, fit, mc, r1=r1_bools, sn_band=save_name, save=True)
+        #plot mcmc fit over ztf data and corner plots
+        plot_mcmc_results(x, y, yerr, fit, mc, r1=r1_bools, sn_band=save_name, save=True)
     return fit
+
+
+def h5_2_txt(PATH_TO_CHAINS):
+    """
+    save flattened chains (.txt) from pre-existing .h5 chains 
+    """
+
+    # generate list of sn based on existing h5 chains
+    flist = os.listdir(PATH_TO_CHAINS)
+    band = flist[0][-11] #retrieve band based on input chain file path '../<band>_chains/'
+    names = [f[0:8] for f in flist]
+    sn_names = []
+    for sn in names:
+        if sn[-1]=='_':
+            snew = sn[0:7]
+        else:
+            snew=sn
+        sn_names.append(snew)
+
+    # save flattened chains as txt files
+    for i,sn in enumerate(sn_names):
+        print(f"Working on {sn}")
+        fname = PATH_TO_CHAINS+sn+'_'+band+'_flatchains.txt' 
+        reader = emcee.backends.HDFBackend(fname)
+        flat_samples = reader.get_chain(discard=100, flat=True, thin=15)
+        np.savetxt(PATH_TO_CHAINS+sn+'_'+band+'_flatchains.txt', flat_samples)
