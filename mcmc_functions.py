@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import emcee
 import corner
+import os
 
 SAVE_DIR = './mcmc_fp_results/'
 CHAINS_SAVE_DIR = '../ztf_IIb_data/mcmc_fp_results/mcmc_chains/'
