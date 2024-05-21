@@ -1,6 +1,6 @@
 # Lightning Model Explainer
 
->This model was fit to an initial sample of 10 ZTF/ATLAS forced photometry light curves of doubly peaked SNe IIb light curves. The goal was to ascertain population statistics of these objects and use the best-fit parameters as individual features in filter for use in alert stream to catch these objects early on (i.e. before re-rising to nickel-peak). 
+>This model was fit to an initial sample of 10 ZTF/ATLAS forced photometry light curves of doubly peaked SNe IIb light curves. The goal was to ascertain population statistics of these objects and use the best-fit parameters as individual features in a filter for use in alert stream to catch these objects early on (i.e. before re-rising to nickel-peak). 
 
 Note: we do not intend this model to be fit to live-stream alert stream light curves.
 
