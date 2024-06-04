@@ -358,5 +358,5 @@ def plot_residuals(merge_df, sn_name, save=False):
     axs[1].legend(loc='upper right')
     plt.tight_layout()
     if save:
-        plt.savefig('./figures/individ_residuals_'+sn_name+'.png')
+        plt.savefig('./figures/fp/individ_residuals_'+sn_name+'.png')
     plt.show()
