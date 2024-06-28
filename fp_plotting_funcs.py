@@ -88,7 +88,7 @@ def read_in_data(file_path, data_source=''):
     return df
     
 
-def export_combined_df(fp_df, atlas_df, SN_ID='temp'):
+def export_combined_df(fp_df, atlas_df, SN_ID='temp', verbose=False):
     times = np.concatenate((np.array(fp_df['jd']),np.array(atlas_df['JD'])),axis=None)
     filters = np.concatenate((np.array(fp_df['filter']),np.array(atlas_df['F'])),axis=None)
     mags = np.concatenate((np.array(fp_df['mag']),np.array(atlas_df['m'])),axis=None)
@@ -101,7 +101,10 @@ def export_combined_df(fp_df, atlas_df, SN_ID='temp'):
     ztf_atlas_df['ztf_mag_upper'][ztf_atlas_df['data_origin']=='ztf'] = np.array(fp_df['mag_err_upper'])
     ztf_atlas_df['atlas_mag_err'][ztf_atlas_df['data_origin']=='atlas'] = np.array(atlas_df['dm'])
 
-    ztf_atlas_df.to_csv('./forced_phot_data/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
+    if verbose:
+        print(ztf_atlas_df)
+
+    ztf_atlas_df.to_csv('./data/forced_phot_data/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
     return 
 
 

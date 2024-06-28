@@ -21,25 +21,26 @@ SAVE_DIR = '/DATA/pnr5sh/'
 CHAINS_SAVE_DIR = '/DATA/pnr5sh/mcmc_chains/'
 
 # read in the data (df created in fp jupyter notebook)
-snztf18 = pd.read_csv('./forced_phot_data/snztf18_ztf_atlas_df.csv',index_col='index')
-sn19rwd = pd.read_csv('./forced_phot_data/sn19rwd_ztf_atlas_df.csv',index_col='index')
-sn20bio = pd.read_csv('./forced_phot_data/sn20bio_ztf_atlas_df.csv',index_col='index')
-sn21aezx = pd.read_csv('./forced_phot_data/sn21aezx_ztf_atlas_df.csv',index_col='index')
-sn21gno = pd.read_csv('./forced_phot_data/sn21gno_ztf_atlas_df.csv',index_col='index')
-sn21heh = pd.read_csv('./forced_phot_data/sn21heh_ztf_atlas_df.csv',index_col='index')
-sn21vgn = pd.read_csv('./forced_phot_data/sn21vgn_ztf_atlas_df.csv',index_col='index')
-sn22hnt = pd.read_csv('./forced_phot_data/sn22hnt_ztf_atlas_df.csv',index_col='index')
-sn22jpx = pd.read_csv('./forced_phot_data/sn22jpx_ztf_atlas_df.csv',index_col='index')
-sn22qzr = pd.read_csv('./forced_phot_data/sn22qzr_ztf_atlas_df.csv',index_col='index')
+snztf18 = pd.read_csv('./data/forced_phot_data/snztf18_ztf_atlas_df.csv',index_col='index')
+sn19rwd = pd.read_csv('./data/forced_phot_data/sn19rwd_ztf_atlas_df.csv',index_col='index')
+sn20bio = pd.read_csv('./data/forced_phot_data/sn20bio_ztf_atlas_df.csv',index_col='index')
+sn21aezx = pd.read_csv('./data/forced_phot_data/sn21aezx_ztf_atlas_df.csv',index_col='index')
+sn21gno = pd.read_csv('./data/forced_phot_data/sn21gno_ztf_atlas_df.csv',index_col='index')
+sn21heh = pd.read_csv('./data/forced_phot_data/sn21heh_ztf_atlas_df.csv',index_col='index')
+sn21vgn = pd.read_csv('./data/forced_phot_data/sn21vgn_ztf_atlas_df.csv',index_col='index')
+sn22hnt = pd.read_csv('./data/forced_phot_data/sn22hnt_ztf_atlas_df.csv',index_col='index')
+sn22jpx = pd.read_csv('./data/forced_phot_data/sn22jpx_ztf_atlas_df.csv',index_col='index')
+sn22qzr = pd.read_csv('./data/forced_phot_data/sn22qzr_ztf_atlas_df.csv',index_col='index')
 # # added later
-sn20ano = pd.read_csv('./forced_phot_data/sn20ano_ztf_atlas_df.csv', index_col='index')
-sn20ikq = pd.read_csv('./forced_phot_data/sn20ikq_ztf_atlas_df.csv', index_col='index')
-sn20rsc = pd.read_csv('./forced_phot_data/sn20rsc_ztf_atlas_df.csv', index_col='index')
+sn20ano = pd.read_csv('./data/forced_phot_data/sn20ano_ztf_atlas_df.csv', index_col='index')
+sn20ikq = pd.read_csv('./data/forced_phot_data/sn20ikq_ztf_atlas_df.csv', index_col='index')
+sn20rsc = pd.read_csv('./data/forced_phot_data/sn20rsc_ztf_atlas_df.csv', index_col='index')
+sn21pb =  pd.read_csv('./data/forced_phot_data/sn21pb_ztf_atlas_df.csv', index_col='index')
 
-df_list = [snztf18,sn19rwd,sn20ano,sn20bio,sn20ikq,sn20rsc,sn21aezx,sn21gno,sn21heh,sn21vgn,sn22hnt,sn22jpx,sn22qzr]
-df_str_list = ['snztf18','sn19rwd','sn20ano','sn20bio','sn20ikq','sn20rsc','sn21aezx','sn21gno','sn21heh','sn21vgn','sn22hnt','sn22jpx','sn22qzr']
-# df_list = [sn20ano, sn20ikq, sn20rsc]
-# df_str_list = ['sn20ano', 'sn20ikq', 'sn20rsc']
+df_list = [snztf18,sn19rwd,sn20ano,sn20bio,sn20ikq,sn20rsc,sn21aezx,sn21gno,sn21heh,
+           sn21pb, sn21vgn,sn22hnt,sn22jpx,sn22qzr]
+df_str_list = ['snztf18','sn19rwd','sn20ano','sn20bio','sn20ikq','sn20rsc','sn21aezx','sn21gno','sn21heh',
+               'sn21pb', 'sn21vgn','sn22hnt','sn22jpx','sn22qzr']
 
 # sn20ano.columns
 
@@ -51,7 +52,8 @@ for i,df in enumerate(df_list):
 #taken from forced_phot_nb
 xlims_jd_ls = [[25+2.4582e6, 55+2.4582e6], [760+2.458e6, 800+2.458e6], [869+2.458e6,910+2.458e6],[2458875.5, 2458920.5], 
                [-35+2.459e6,20+2.459e6], [78+2.459e6,110+2.459e6],[530+2.459e6, 600+2.459e6], [290+2.459e6, 320+2.459e6], 
-               [2459290.5, 2459340.5], [2459430.5, 2459480.5], [2459680.5, 2459730.5], [2459706.5, 2459740.5], [799+2.459e6, 875+2.459e6]]
+               [2459290.5, 2459340.5], [18+2.4592e6, 55+2.4592e6], [2459430.5, 2459480.5], [2459680.5, 2459730.5], 
+               [2459706.5, 2459740.5], [799+2.459e6, 875+2.459e6]]
 
 snztf18_cut = slice_df(snztf18,xlims_jd_ls[0])
 sn19rwd_cut = slice_df(sn19rwd,xlims_jd_ls[1])
@@ -62,12 +64,14 @@ sn20rsc_cut = slice_df(sn20rsc,xlims_jd_ls[5])
 sn21aezx_cut = slice_df(sn21aezx,xlims_jd_ls[6])
 sn21gno_cut = slice_df(sn21gno,xlims_jd_ls[7])
 sn21heh_cut = slice_df(sn21heh,xlims_jd_ls[8])
-sn21vgn_cut = slice_df(sn21vgn,xlims_jd_ls[9])
-sn22hnt_cut = slice_df(sn22hnt,xlims_jd_ls[10])
-sn22jpx_cut = slice_df(sn22jpx,xlims_jd_ls[11])
-sn22qzr_cut = slice_df(sn22qzr,xlims_jd_ls[12])
+sn21pb_cut = slice_df(sn21pb, xlims_jd_ls[9])
+sn21vgn_cut = slice_df(sn21vgn,xlims_jd_ls[10])
+sn22hnt_cut = slice_df(sn22hnt,xlims_jd_ls[11])
+sn22jpx_cut = slice_df(sn22jpx,xlims_jd_ls[12])
+sn22qzr_cut = slice_df(sn22qzr,xlims_jd_ls[13])
 
-df_cut_list = [snztf18_cut,sn19rwd_cut,sn20ano_cut,sn20bio_cut,sn20ikq_cut,sn20rsc_cut,sn21aezx_cut,sn21gno_cut,sn21heh_cut,sn21vgn_cut,sn22hnt_cut,sn22jpx_cut,sn22qzr_cut]
+df_cut_list = [snztf18_cut,sn19rwd_cut,sn20ano_cut,sn20bio_cut,sn20ikq_cut,sn20rsc_cut,sn21aezx_cut,sn21gno_cut,
+               sn21heh_cut,sn21pb_cut,sn21vgn_cut,sn22hnt_cut,sn22jpx_cut,sn22qzr_cut]
 
 # %matplotlib inline
 # for i,df in enumerate(df_cut_list):
@@ -81,7 +85,7 @@ df_cut_list = [snztf18_cut,sn19rwd_cut,sn20ano_cut,sn20bio_cut,sn20ikq_cut,sn20r
 #     plt.legend(loc='lower right')
 #     plt.title(df_str_list[i])
 
-a2_inds = [52, 25, 68, 22,73,27,5, 9, 10, 116, 11, 51, 2]
+a2_inds = [52, 25, 68, 22,73,27,5, 9, 10, 37, 116, 11, 51, 2]
 
 #actually normalizing the LCs to a2
 for i,df in enumerate(df_cut_list):
@@ -97,13 +101,15 @@ sn20rsc_sub,a5 = subselect(df_cut_list[5])
 sn21aezx_sub,a6 = subselect(df_cut_list[6])
 sn21gno_sub,a7 = subselect(df_cut_list[7])
 sn21heh_sub,a8 = subselect(df_cut_list[8])
-sn21vgn_sub,a9 = subselect(df_cut_list[9])
-sn22hnt_sub,a10 = subselect(df_cut_list[10])
-sn22jpx_sub,a11 = subselect(df_cut_list[11])
-sn22qzr_sub,a12 = subselect(df_cut_list[12])
+sn21pb_sub,a9 = subselect(df_cut_list[9])
+sn21vgn_sub,a10 = subselect(df_cut_list[10])
+sn22hnt_sub,a11 = subselect(df_cut_list[11])
+sn22jpx_sub,a12 = subselect(df_cut_list[12])
+sn22qzr_sub,a13 = subselect(df_cut_list[13])
 
-df_sub_ls = [snztf18_sub,sn19rwd_sub,sn20ano_sub,sn20bio_sub,sn20ikq_sub,sn20rsc_sub,sn21aezx_sub,sn21gno_sub,sn21heh_sub,sn21vgn_sub,sn22hnt_sub,sn22jpx_sub,sn22qzr_sub]
-new_a2_inds = [a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12]
+df_sub_ls = [snztf18_sub,sn19rwd_sub,sn20ano_sub,sn20bio_sub,sn20ikq_sub,sn20rsc_sub,sn21aezx_sub,sn21gno_sub,sn21heh_sub,
+             sn21pb_sub,sn21vgn_sub,sn22hnt_sub,sn22jpx_sub,sn22qzr_sub]
+new_a2_inds = [a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13]
 
 #create 1 column of all errors
 for i,df in enumerate(df_sub_ls):
@@ -127,9 +133,10 @@ for i,df in enumerate(df_sub_ls):
 #     plt.ylabel('Normalized Magnitude')
 
 # def boolean list of rise1
-r1_bools = [True,True,True,True,True,True,True,True,True,True,True,True,True]
-r1_g_bools = [True, True, True, True, True,True, True, True, True, True, False, False, False]
-r1_r_bools = [True,True,True,True,True,True,True,True,True,True,True,True,True]
+r1_bools = [True,True,True,True,True,True,True,True,True,True,True,True,True,True]
+r1_g_bools = [True, True, True, True, True,True, True, True, True, False, True, False, False, False]
+r1_r_bools = [True,True,True,True,True,True,True,True,True,True,True,True,True, True]
+
 r1_bool_dict = {
         "g": {"snztf18":True,
               "sn19rwd":True,
@@ -143,7 +150,8 @@ r1_bool_dict = {
               'sn22qzr':False,
               'sn20ano':True,
               'sn20ikq':True,
-              'sn20rsc':True},
+              'sn20rsc':True,
+              'sn21pb':False},
         "r": {"snztf18":True,
               "sn19rwd":True,
               "sn20bio":True,
@@ -156,30 +164,32 @@ r1_bool_dict = {
               'sn22qzr':True,
               'sn20ano':True,
               'sn20ikq':True,
-              'sn20rsc':True}
+              'sn20rsc':True,
+              'sn21pb':True}
     }
 
 # actually creating list of prior space limits
-snztf18_pdict,sn19rwd_pdict,sn20ano_pdict,sn20bio_pdict,sn20ikq_pdict,sn20rsc_pdict,sn21aezx_pdict,sn21gno_pdict,sn21heh_pdict,sn21vgn_pdict,sn22hnt_pdict,sn22jpx_pdict,sn22qzr_pdict=[],[],[],[],[],[],[],[],[],[],[],[],[]
-temp_pdict = [snztf18_pdict,sn19rwd_pdict,sn20ano_pdict,sn20bio_pdict,sn20ikq_pdict,sn20rsc_pdict,sn21aezx_pdict,sn21gno_pdict,sn21heh_pdict,sn21vgn_pdict,sn22hnt_pdict,sn22jpx_pdict,sn22qzr_pdict]
+snztf18_pdict,sn19rwd_pdict,sn20ano_pdict,sn20bio_pdict,sn20ikq_pdict,sn20rsc_pdict,sn21aezx_pdict,sn21gno_pdict,sn21pb_pdict,sn21heh_pdict,sn21vgn_pdict,sn22hnt_pdict,sn22jpx_pdict,sn22qzr_pdict=[],[],[],[],[],[],[],[],[],[],[],[],[],[]
+temp_pdict = [snztf18_pdict,sn19rwd_pdict,sn20ano_pdict,sn20bio_pdict,sn20ikq_pdict,sn20rsc_pdict,sn21aezx_pdict,sn21gno_pdict,sn21heh_pdict,sn21pb_pdict,sn21vgn_pdict,sn22hnt_pdict,sn22jpx_pdict,sn22qzr_pdict]
 
 for i,sub in enumerate(df_sub_ls):
     # print('ON SNE', df_str_list[i])
-    p = calc_prior(sub, r1_g=r1_g_bools[i], r1_r=r1_r_bools[i])
+    df_str = df_str_list[i]
+    p = calc_prior(sub, r1_g=r1_bool_dict['g'][df_str], r1_r=r1_bool_dict['r'][df_str])
     temp_pdict[i].append(p) #applies extra 1st dimension
 
 pdict_ls = [snztf18_pdict[0],sn19rwd_pdict[0],sn20ano_pdict[0],sn20bio_pdict[0],sn20ikq_pdict[0],sn20rsc_pdict[0],
-            sn21aezx_pdict[0],sn21gno_pdict[0],sn21heh_pdict[0],sn21vgn_pdict[0],sn22hnt_pdict[0],sn22jpx_pdict[0],sn22qzr_pdict[0]]
+            sn21aezx_pdict[0],sn21gno_pdict[0],sn21heh_pdict[0],sn21pb_pdict[0], sn21vgn_pdict[0],sn22hnt_pdict[0],sn22jpx_pdict[0],sn22qzr_pdict[0]]
 
 # run p0_calc
-snztf18_p0,sn19rwd_p0,sn20ano_p0,sn20bio_p0,sn20ikq_p0,sn20rsc_p0,sn21aezx_p0,sn21gno_p0,sn21heh_p0,sn21vgn_p0,sn22hnt_p0,sn22jpx_p0,sn22qzr_p0=[],[],[],[],[],[],[],[],[],[],[],[],[]
-temp_p0s = [snztf18_p0,sn19rwd_p0,sn20ano_p0,sn20bio_p0,sn20ikq_p0,sn20rsc_p0,sn21aezx_p0,sn21gno_p0,sn21heh_p0,sn21vgn_p0,sn22hnt_p0,sn22jpx_p0,sn22qzr_p0]
+snztf18_p0,sn19rwd_p0,sn20ano_p0,sn20bio_p0,sn20ikq_p0,sn20rsc_p0,sn21aezx_p0,sn21gno_p0,sn21heh_p0,sn21pb_p0,sn21vgn_p0,sn22hnt_p0,sn22jpx_p0,sn22qzr_p0=[],[],[],[],[],[],[],[],[],[],[],[],[],[]
+temp_p0s = [snztf18_p0,sn19rwd_p0,sn20ano_p0,sn20bio_p0,sn20ikq_p0,sn20rsc_p0,sn21aezx_p0,sn21gno_p0,sn21heh_p0,sn21pb_p0,sn21vgn_p0,sn22hnt_p0,sn22jpx_p0,sn22qzr_p0]
 
 for i,pdict in enumerate(pdict_ls):
     p = p0_calc(pdict)
     temp_p0s[i].append(p) #applies extra 1st dimension
 
-p0s = [snztf18_p0[0],sn19rwd_p0[0],sn20ano_p0[0],sn20bio_p0[0],sn20ikq_p0[0],sn20rsc_p0[0],sn21aezx_p0[0],sn21gno_p0[0],sn21heh_p0[0],sn21vgn_p0[0],sn22hnt_p0[0],sn22jpx_p0[0],sn22qzr_p0[0]]
+p0s = [snztf18_p0[0],sn19rwd_p0[0],sn20ano_p0[0],sn20bio_p0[0],sn20ikq_p0[0],sn20rsc_p0[0],sn21aezx_p0[0],sn21gno_p0[0],sn21heh_p0[0],sn21pb_p0[0],sn21vgn_p0[0],sn22hnt_p0[0],sn22jpx_p0[0],sn22qzr_p0[0]]
 
 #sep out initial guesses for multiproc
 g_p0 = [p0s[i][0] for i in range(len(p0s))]
@@ -190,21 +200,21 @@ r_p0 = [p0s[i][1] for i in range(len(p0s))]
 #    RUN ALL MCMC AND PLOT RESULTS
 #
 ###############################################
-
+k = 9
 # G BAND FITS
 # create method to run subset of sample
-df_strs = [df_str_list[11]]
-df_subs = [df_sub_ls[11]]
-r1_g_bools = [False]
-gp0s = [g_p0[11]]
-pdicts = [pdict_ls[11]]
+df_strs = [df_str_list[k]]
+df_subs = [df_sub_ls[k]]
+r1_g_bools = [r1_bool_dict['g'][df_str_list[k]]]
+gp0s = [g_p0[k]]
+pdicts = [pdict_ls[k]]
 
 # R BAND FITS
 # create method to run subset of sample
-rp0s = [r_p0[11]]
-r1_r_bools = [True]
+rp0s = [r_p0[k]]
+r1_r_bools = [r1_bool_dict['r'][df_str_list[k]]]
 
-def run_mcmc(run=False, g=False, r=False):
+def run_mcmc(run=False, g=False, r=False, date='month00'):
     if run:
         print(f"RUNNING MCMC")
         if g:
@@ -212,7 +222,7 @@ def run_mcmc(run=False, g=False, r=False):
             inputs = zip(df_strs, df_subs, ['g']*len(df_subs), r1_g_bools, gp0s, pdicts)
             all_fits_g = []
 
-            with open(SAVE_DIR+'bestfits_g_june3.txt', 'a') as savefile:
+            with open(SAVE_DIR+'bestfits_g_'+date+'.txt', 'a') as savefile:
                 for fit in pool.map(mp_fit_sne, inputs):
                     np.savetxt(savefile,fit)
                     all_fits_g.append(fit)
@@ -225,7 +235,7 @@ def run_mcmc(run=False, g=False, r=False):
             inputs = zip(df_strs, df_subs, ['r']*len(df_subs), r1_r_bools, rp0s, pdicts)
             all_fits_r = []
 
-            with open(SAVE_DIR+'bestfits_r_june3.txt', 'a') as savefile:
+            with open(SAVE_DIR+'bestfits_r_'+date+'.txt', 'a') as savefile:
                 for fit in pool.map(mp_fit_sne, inputs):
                     np.savetxt(savefile,fit)
                     all_fits_r.append(fit)
@@ -235,101 +245,4 @@ def run_mcmc(run=False, g=False, r=False):
         print(f"NOT running MCMC")
     return
 
-run_mcmc(run=True, g=True)
-exit()
-
-# creating table of bestfit values to expport
-print(f"READING IN FLATCHAINS...")
-g_chains = []
-r_chains = []
-for i in range(len(df_strs)):
-    gf = SAVE_DIR+'flatchains/'+df_strs[i]+'_g_flatchains.txt'
-    rf = SAVE_DIR+'flatchains/'+df_strs[i]+'_r_flatchains.txt'
-    g_chains.append(gf)
-    r_chains.append(rf)
-
-def bestfit_recovery(filename, sub_df, band='', r1_bool=True, sn_id_band='test_g', replot=False):
-    flat_samples = np.loadtxt(filename)
-    if r1_bool:
-        ndim = 7
-    if not r1_bool:
-        ndim = 5
-
-    mcmc_results = []
-    #retrieve the 16th/50th/84th percentile for each param and the lower/upper bounds on each
-    for i in range(ndim):
-        mcmc = np.percentile(flat_samples[:, i], [16, 50, 84])
-        q = np.diff(mcmc)
-        arr = [mcmc[1], q[0], q[1]]
-        mcmc_results.append(arr)
-
-    # making fit/autocorr/corner plots
-    if band == 'g':
-        g_df = sub_df[(sub_df['filter']=='ZTF_g') | (sub_df['filter']=='c')]
-        x,y,yerr = np.array(g_df['norm_t']),np.array(g_df['norm_m']),np.array(g_df['mag_err_all'])
-    if band == 'r':
-        r_df = sub_df[(sub_df['filter']=='ZTF_r') | (sub_df['filter']=='o')]
-        x,y,yerr = np.array(r_df['norm_t']),np.array(r_df['norm_m']),np.array(r_df['mag_err_all'])
-    if replot:
-        plot_mcmc_results(x, y, yerr, mcmc_results, flat_samples, r1=r1_bool, sn_band=sn_id_band, save=True)
-        do_gw_autocorr_and_plot(filename, sn_id_band)
-
-    return mcmc_results
-
-print(f"COMPUTING BESTFIT VALUES NOW...")
-all_fits_g = []
-for i,file in enumerate(g_chains):
-    fit = bestfit_recovery(file, df_subs[i], band='g', r1_bool=r1_bools[i], sn_id_band=df_strs[i]+'_g')
-    all_fits_g.append(fit)
-
-all_fits_r = []
-for i,file in enumerate(r_chains):
-    fit = bestfit_recovery(file, df_subs[i], band='r', r1_bool=r1_bools[i], sn_id_band=df_strs[i]+'_r')
-    all_fits_r.append(fit)
-
-
-print(f"MAKING BESTFIT TABLE NOW...")
-#the next two loops separate out the indivudal param values and append to list to do stats on them
-best_fits_g,best_fits_r = [],[]
-low_err_g, upp_err_g =[],[]
-low_err_r, upp_err_r =[],[]
-for i in range(len(all_fits_r)):
-    #g band
-    bestg = np.array(all_fits_g[i]).T[0]  #bestfit (50% ptile) values
-    lowg = np.array(all_fits_g[i]).T[1]   #lower bound, 16% ptile
-    highg =  np.array(all_fits_g[i]).T[2] #upper bound, 84% ptile
-    best_fits_g.append(bestg)
-    low_err_g.append(lowg)
-    upp_err_g.append(highg)
-
-    #r band
-    bestr = np.array(all_fits_r[i]).T[0]  #bestfit (50% ptile) values
-    lowr = np.array(all_fits_r[i]).T[1]   #lower bound, 16% ptile
-    highr =  np.array(all_fits_r[i]).T[2] #upper bound, 84% ptile
-    best_fits_r.append(bestr)
-    low_err_r.append(lowr)
-    upp_err_r.append(highr)
-
-# formatting and saving best fits values in g and r
-best_fits_g_same_len = []
-for i,arr in enumerate(best_fits_g):
-    if len(arr) == 5:
-        arr = np.insert(arr, [0,3], np.nan)
-    best_fits_g_same_len.append(arr)
-
-best_fits_r_same_len = []
-for i,arr in enumerate(best_fits_r):
-    if len(arr) == 5:
-        arr = np.insert(arr, [0,3], np.nan)
-    best_fits_r_same_len.append(arr)
-
-#saving to df
-best_fits_cols_g = ['m1_g', 'm2_g', 'm3_g', 'b2_g', 'a1_g', 'a2_g', 'log_f_g']
-best_fits_cols_r = ['m1_r', 'm2_r', 'm3_r', 'b2_r', 'a1_r', 'a2_r', 'log_f_r']
-bestfit_df = pd.DataFrame(columns=best_fits_cols_g, data=best_fits_g_same_len)
-bestfit_r_df = pd.DataFrame(columns=best_fits_cols_r, data=best_fits_r_same_len)
-bestfit_df.insert(0,'SN_ID', df_strs)
-bestfit_df = pd.concat([bestfit_df,bestfit_r_df], axis=1)
-bestfit_df.to_csv(SAVE_DIR+'/mcmc_bestfit_vals_may1.csv')
-print(bestfit_df)
-print(f"DONE")
+run_mcmc(run=True, g=True, r=True)
