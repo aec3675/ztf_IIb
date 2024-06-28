@@ -245,4 +245,4 @@ def run_mcmc(run=False, g=False, r=False, date='month00'):
         print(f"NOT running MCMC")
     return
 
-run_mcmc(run=True, g=True, r=True)
+run_mcmc(run=True, g=True, r=True, date='june28')
