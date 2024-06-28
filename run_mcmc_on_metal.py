@@ -8,7 +8,7 @@ import numpy.polynomial.polynomial as poly
 import emcee
 import corner
 from scipy.optimize import minimize
-from IPython.display import display, Math
+#from IPython.display import display, Math
 import matplotlib as mpl
 from multiprocessing.pool import Pool
 from mcmc_functions import *
@@ -16,6 +16,9 @@ import pickle
 import h5py
 import glob
 import os
+
+SAVE_DIR = '/DATA/pnr5sh/'
+CHAINS_SAVE_DIR = '/DATA/pnr5sh/mcmc_chains/'
 
 # read in the data (df created in fp jupyter notebook)
 snztf18 = pd.read_csv('./forced_phot_data/snztf18_ztf_atlas_df.csv',index_col='index')
@@ -188,27 +191,145 @@ r_p0 = [p0s[i][1] for i in range(len(p0s))]
 #
 ###############################################
 
+# G BAND FITS
 # create method to run subset of sample
-df_strs = [df_str_list[2],df_str_list[4], df_str_list[5]]
-df_subs = [df_sub_ls[2], df_sub_ls[4], df_sub_ls[5]]
-r1_bools = [True,True,True]
-gp0s = [g_p0[2],g_p0[4], g_p0[5]]
-pdicts = [pdict_ls[2], pdict_ls[4], pdict_ls[5]]
+df_strs = [df_str_list[11]]
+df_subs = [df_sub_ls[11]]
+r1_g_bools = [False]
+gp0s = [g_p0[11]]
+pdicts = [pdict_ls[11]]
 
-pool=Pool(3)
-inputs = zip(df_strs, df_subs, ['g']*len(df_subs), r1_bools, gp0s, pdicts)
+# R BAND FITS
+# create method to run subset of sample
+rp0s = [r_p0[11]]
+r1_r_bools = [True]
+
+def run_mcmc(run=False, g=False, r=False):
+    if run:
+        print(f"RUNNING MCMC")
+        if g:
+            pool=Pool(len(df_strs))
+            inputs = zip(df_strs, df_subs, ['g']*len(df_subs), r1_g_bools, gp0s, pdicts)
+            all_fits_g = []
+
+            with open(SAVE_DIR+'bestfits_g_june3.txt', 'a') as savefile:
+                for fit in pool.map(mp_fit_sne, inputs):
+                    np.savetxt(savefile,fit)
+                    all_fits_g.append(fit)
+            pool.close()
+            savefile.close()
+        
+        if r:
+            # R BAND FITS
+            pool=Pool(len(df_strs))
+            inputs = zip(df_strs, df_subs, ['r']*len(df_subs), r1_r_bools, rp0s, pdicts)
+            all_fits_r = []
+
+            with open(SAVE_DIR+'bestfits_r_june3.txt', 'a') as savefile:
+                for fit in pool.map(mp_fit_sne, inputs):
+                    np.savetxt(savefile,fit)
+                    all_fits_r.append(fit)
+            pool.close()
+            savefile.close()
+    else:
+        print(f"NOT running MCMC")
+    return
+
+run_mcmc(run=True, g=True)
+exit()
+
+# creating table of bestfit values to expport
+print(f"READING IN FLATCHAINS...")
+g_chains = []
+r_chains = []
+for i in range(len(df_strs)):
+    gf = SAVE_DIR+'flatchains/'+df_strs[i]+'_g_flatchains.txt'
+    rf = SAVE_DIR+'flatchains/'+df_strs[i]+'_r_flatchains.txt'
+    g_chains.append(gf)
+    r_chains.append(rf)
+
+def bestfit_recovery(filename, sub_df, band='', r1_bool=True, sn_id_band='test_g', replot=False):
+    flat_samples = np.loadtxt(filename)
+    if r1_bool:
+        ndim = 7
+    if not r1_bool:
+        ndim = 5
+
+    mcmc_results = []
+    #retrieve the 16th/50th/84th percentile for each param and the lower/upper bounds on each
+    for i in range(ndim):
+        mcmc = np.percentile(flat_samples[:, i], [16, 50, 84])
+        q = np.diff(mcmc)
+        arr = [mcmc[1], q[0], q[1]]
+        mcmc_results.append(arr)
+
+    # making fit/autocorr/corner plots
+    if band == 'g':
+        g_df = sub_df[(sub_df['filter']=='ZTF_g') | (sub_df['filter']=='c')]
+        x,y,yerr = np.array(g_df['norm_t']),np.array(g_df['norm_m']),np.array(g_df['mag_err_all'])
+    if band == 'r':
+        r_df = sub_df[(sub_df['filter']=='ZTF_r') | (sub_df['filter']=='o')]
+        x,y,yerr = np.array(r_df['norm_t']),np.array(r_df['norm_m']),np.array(r_df['mag_err_all'])
+    if replot:
+        plot_mcmc_results(x, y, yerr, mcmc_results, flat_samples, r1=r1_bool, sn_band=sn_id_band, save=True)
+        do_gw_autocorr_and_plot(filename, sn_id_band)
+
+    return mcmc_results
+
+print(f"COMPUTING BESTFIT VALUES NOW...")
 all_fits_g = []
+for i,file in enumerate(g_chains):
+    fit = bestfit_recovery(file, df_subs[i], band='g', r1_bool=r1_bools[i], sn_id_band=df_strs[i]+'_g')
+    all_fits_g.append(fit)
 
-with open(SAVE_DIR+'bestfits_g_may1.txt', 'a') as savefile:
-    for fit in pool.map(mp_fit_sne, inputs):
-        np.savetxt(savefile,fit)
-        all_fits_g.append(fit)
-pool.close()
-savefile.close()
+all_fits_r = []
+for i,file in enumerate(r_chains):
+    fit = bestfit_recovery(file, df_subs[i], band='r', r1_bool=r1_bools[i], sn_id_band=df_strs[i]+'_r')
+    all_fits_r.append(fit)
 
 
-# # RUN IF WANT TO CONVERT H5 CHAIN FILES TO FLAT CHAINS LOCALLY
-# PATH_TO_G_CHAINS = '/DATA/pnr5sh/mcmc_chains/g_chains/'
-# PATH_TO_R_CHAINS = '/DATA/pnr5sh/mcmc_chains/r_chains/'
-# h5_2_txt(PATH_TO_G_CHAINS)
-# h5_2_txt(PATH_TO_R_CHAINS)
+print(f"MAKING BESTFIT TABLE NOW...")
+#the next two loops separate out the indivudal param values and append to list to do stats on them
+best_fits_g,best_fits_r = [],[]
+low_err_g, upp_err_g =[],[]
+low_err_r, upp_err_r =[],[]
+for i in range(len(all_fits_r)):
+    #g band
+    bestg = np.array(all_fits_g[i]).T[0]  #bestfit (50% ptile) values
+    lowg = np.array(all_fits_g[i]).T[1]   #lower bound, 16% ptile
+    highg =  np.array(all_fits_g[i]).T[2] #upper bound, 84% ptile
+    best_fits_g.append(bestg)
+    low_err_g.append(lowg)
+    upp_err_g.append(highg)
+
+    #r band
+    bestr = np.array(all_fits_r[i]).T[0]  #bestfit (50% ptile) values
+    lowr = np.array(all_fits_r[i]).T[1]   #lower bound, 16% ptile
+    highr =  np.array(all_fits_r[i]).T[2] #upper bound, 84% ptile
+    best_fits_r.append(bestr)
+    low_err_r.append(lowr)
+    upp_err_r.append(highr)
+
+# formatting and saving best fits values in g and r
+best_fits_g_same_len = []
+for i,arr in enumerate(best_fits_g):
+    if len(arr) == 5:
+        arr = np.insert(arr, [0,3], np.nan)
+    best_fits_g_same_len.append(arr)
+
+best_fits_r_same_len = []
+for i,arr in enumerate(best_fits_r):
+    if len(arr) == 5:
+        arr = np.insert(arr, [0,3], np.nan)
+    best_fits_r_same_len.append(arr)
+
+#saving to df
+best_fits_cols_g = ['m1_g', 'm2_g', 'm3_g', 'b2_g', 'a1_g', 'a2_g', 'log_f_g']
+best_fits_cols_r = ['m1_r', 'm2_r', 'm3_r', 'b2_r', 'a1_r', 'a2_r', 'log_f_r']
+bestfit_df = pd.DataFrame(columns=best_fits_cols_g, data=best_fits_g_same_len)
+bestfit_r_df = pd.DataFrame(columns=best_fits_cols_r, data=best_fits_r_same_len)
+bestfit_df.insert(0,'SN_ID', df_strs)
+bestfit_df = pd.concat([bestfit_df,bestfit_r_df], axis=1)
+bestfit_df.to_csv(SAVE_DIR+'/mcmc_bestfit_vals_may1.csv')
+print(bestfit_df)
+print(f"DONE")

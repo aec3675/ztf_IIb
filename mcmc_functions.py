@@ -5,8 +5,10 @@ import emcee
 import corner
 import os
 
-SAVE_DIR = './mcmc_fp_results/'
-CHAINS_SAVE_DIR = '../ztf_IIb_data/mcmc_fp_results/mcmc_chains/'
+#SAVE_DIR = './mcmc_fp_results/'
+#CHAINS_SAVE_DIR = '../ztf_IIb_data/mcmc_fp_results/mcmc_chains/'
+SAVE_DIR = '/DATA/pnr5sh/'
+CHAINS_SAVE_DIR = '/DATA/pnr5sh/mcmc_chains/'
 
 def convert_ztf_err(df):
     l = (df.ztf_mag_lower - df.mag)
@@ -469,29 +471,3 @@ def mp_fit_sne(idfb, plot=False):
         #plot mcmc fit over ztf data and corner plots
         plot_mcmc_results(x, y, yerr, fit, mc, r1=r1_bools, sn_band=save_name, save=True)
     return fit
-
-
-def h5_2_txt(PATH_TO_CHAINS):
-    """
-    save flattened chains (.txt) from pre-existing .h5 chains 
-    """
-
-    # generate list of sn based on existing h5 chains
-    flist = os.listdir(PATH_TO_CHAINS)
-    band = flist[0][-11] #retrieve band based on input chain file path '../<band>_chains/'
-    names = [f[0:8] for f in flist]
-    sn_names = []
-    for sn in names:
-        if sn[-1]=='_':
-            snew = sn[0:7]
-        else:
-            snew=sn
-        sn_names.append(snew)
-
-    # save flattened chains as txt files
-    for i,sn in enumerate(sn_names):
-        print(f"Working on {sn}")
-        fname = PATH_TO_CHAINS+sn+'_'+band+'_flatchains.txt' 
-        reader = emcee.backends.HDFBackend(fname)
-        flat_samples = reader.get_chain(discard=100, flat=True, thin=15)
-        np.savetxt(PATH_TO_CHAINS+sn+'_'+band+'_flatchains.txt', flat_samples)
