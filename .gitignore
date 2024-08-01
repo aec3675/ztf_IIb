@@ -6,3 +6,5 @@ __pycache__
 **/*.h5
 **/*flatchains
 gp*
+**/temp
+temp/*
