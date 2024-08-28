@@ -39,7 +39,7 @@ def convert2mag(df):
     '''
     converting the ztf fp data flux to mag and appending to df
     '''
-    m = -2.5*np.log10(df.forcediffimflux) + df.zpdiff #magnitude: should be around 12-20
+    m = df.zpdiff - 2.5*np.log10(df.forcediffimflux) #magnitude: should be around 12-20
     
     #calcing asym err bars
     flux_l = df.forcediffimflux - df.forcediffimfluxunc
