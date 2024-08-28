@@ -39,7 +39,7 @@ def convert2mag(df):
     '''
     converting the ztf fp data flux to mag and appending to df
     '''
-    m = df.zpdiff - 2.5*np.log10(df.forcediffimflux) #magnitude: should be around 12-20
+    m = -2.5*np.log10(df.forcediffimflux) + df.zpdiff #magnitude: should be around 12-20
     
     #calcing asym err bars
     flux_l = df.forcediffimflux - df.forcediffimfluxunc
@@ -148,17 +148,13 @@ def normalize_time(merge_df):
 
 
 
-def shape_err(df,filter='f',lower_err_col=None,upper_err_col=None):
+def shape_err(df,filter='f'):
     '''
     deals with uneven error bars on ztf forced photometry 
     output: np.array
     '''
-    if (lower_err_col is None) and (upper_err_col is None):
-        l = (df[df['filter']==filter].mag_err_lower - df[df['filter']==filter].mag).to_numpy()
-        u = (df[df['filter']==filter].mag - df[df['filter']==filter].mag_err_upper).to_numpy()
-    else:
-        l = (df[df['filter']==filter][lower_err_col] - df[df['filter']==filter].mag).to_numpy()
-        u = (df[df['filter']==filter].mag - df[df['filter']==filter][upper_err_col]).to_numpy()
+    l = (df[df['filter']==filter].mag_err_lower - df[df['filter']==filter].mag).to_numpy()
+    u = (df[df['filter']==filter].mag - df[df['filter']==filter].mag_err_upper).to_numpy()
     l = l.reshape(1,len(l))
     u = l.reshape(1,len(u))
 

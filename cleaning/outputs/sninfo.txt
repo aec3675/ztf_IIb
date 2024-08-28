@@ -1,0 +1,2 @@
+tnsname           ra          dec discovery_date closebright_ra closebright_dec
+2020ano 13:06:25.176 +53:28:45.53      58871.465            NaN             NaN

@@ -25,9 +25,9 @@ def slice_df(df,jd_lims=[0,0]):
 def find_a2(df_cut):
     plt.figure(figsize=(10,8))
     plt.scatter(df_cut['JD'], df_cut['mag'],s=10)
-    # for i in range(len(df_cut['JD'])):
-    #     plt.text(np.array(df_cut['JD'])[i], np.array(df_cut['mag'])[i], str(i),fontsize=10)
-    # plt.gca().invert_yaxis()
+    for i in range(len(df_cut['JD'])):
+        plt.text(np.array(df_cut['JD'])[i], np.array(df_cut['mag'])[i], str(i),fontsize=10)
+    plt.gca().invert_yaxis()
     plt.ylim(23,17)
 
 def norm_LC_a2(df_cut, a2=[0]):
@@ -60,7 +60,7 @@ def subselect(df_cut, t_upper=25):
     # creating sub df
     crit = (df_cut['norm_t']<=t_upper)
     df_sub = df_cut[crit].reset_index(drop=True)
-    a2_ind = np.where(df_sub['norm_t']==15)[0][0] #15 is hardcoded value that we normalized the tough to in norm_LC_a2()
+    a2_ind = np.where(df_sub['norm_t']==15)[0][0] #15 is hardcoded value that we normalized the trough to in norm_LC_a2()
 
     # #if last dp before t=20 days is also a2, add the next dp in the LC to the sub_LC
     # if sub_t[-1] == a2_t:

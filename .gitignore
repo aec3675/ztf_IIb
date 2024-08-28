@@ -8,3 +8,5 @@ __pycache__
 gp*
 **/temp
 temp/*
+**/atclean
+**/controls
