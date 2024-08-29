@@ -10,3 +10,5 @@ gp*
 temp/*
 **/atclean
 **/controls
+**/ztf_clean
+ztf_clean/*
