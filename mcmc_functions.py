@@ -45,6 +45,7 @@ def norm_LC_a2(df_cut, a2=[0]):
     norm_m = (df_cut['mag']) - a2_m              #normalized mag in g band
     df_cut['norm_t'] = norm_t
     df_cut['norm_m'] = norm_m
+    print('JD @ a2 = ', a2_t)
     return 
 
 # FIXED DAY SUBSELECTION FROM LCs
@@ -427,7 +428,7 @@ def autocorr_gw2010(y, c=5.0):
     return taus[window]
 
 #putting all the above functions together and plotting result --to call in for loop below
-def do_gw_autocorr_and_plot(mc, sn_band):
+def do_gw_autocorr_and_plot(mc, sn_band, save=False):
     chain = mc.get_chain()[:, :, 0].T
     # Compute the estimators for a few different chain lengths
     N = np.exp(np.linspace(np.log(100), np.log(chain.shape[1]), 10)).astype(int)
@@ -445,7 +446,8 @@ def do_gw_autocorr_and_plot(mc, sn_band):
     plt.xlabel("number of samples, $N$")
     plt.ylabel(r"$\tau$ estimates")
     plt.legend(fontsize=14)
-    plt.savefig(SAVE_DIR+'/figures/'+sn_band+'_autocorr.png')
+    if save:
+        plt.savefig(SAVE_DIR+'figures/'+sn_band+'_autocorr.png')
     # plt.show()
 
 def mp_fit_sne(idfb, plot=False):
