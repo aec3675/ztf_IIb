@@ -12,3 +12,4 @@ temp/*
 **/controls
 **/ztf_clean
 ztf_clean/*
+cleaning/outputs/*flatchains*
