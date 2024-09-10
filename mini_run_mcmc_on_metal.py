@@ -25,7 +25,7 @@ sn20ano['JD'] = sn20ano['mjd']+2400000.5
 sn20ano['mag_err_all'] = sn20ano['err']
 df_str = 'sn20ano'
 
-a2_ind = 36
+a2_ind = 33
 
 norm_LC_a2(sn20ano, a2_ind)
 
@@ -85,4 +85,4 @@ def run_mcmc(run=False, g=False, r=False, date='month00'):
         print(f"NOT running MCMC")
     return
 
-run_mcmc(run=True, g=True, r=True, date='aug29')
+run_mcmc(run=True, g=True, r=True, date='sept3')
