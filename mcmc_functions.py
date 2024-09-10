@@ -86,7 +86,10 @@ def find_nearest_points(series,t):
     lessthan = series[series<t]
     greater = series[series>t]
     lowerbound = np.array(series[series==15-min(np.abs(15-lessthan))])[0]
-    upperbound = np.array(series[series==15+min(np.abs(greater-15))])[0]
+    if len(np.abs(greater-15))>1:
+        upperbound = np.array(series[series==15+min(np.abs(greater-15))])[0]
+    else:
+        upperbound = t+5
     return [lowerbound, upperbound]
 
 def find_within_trange(series,t_norm, t_pm):
@@ -113,7 +116,7 @@ def find_within_trange(series,t_norm, t_pm):
         lowerbound = 15-1.5
     if upperbound-15<1.5:
         upperbound=15+1.5
-    print(lowerbound,upperbound)
+    # print(lowerbound,upperbound)
     return[lowerbound,upperbound]
 
 # defining func to create list of a1/a2 prior-space for each sne
