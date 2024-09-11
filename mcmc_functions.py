@@ -377,7 +377,7 @@ def plot_mcmc_results(x, y, yerr, fit, mc, r1=True, sn_band='test_g', save=True)
     plt.ylabel('Magnitude')
     plt.title(sn_band)
     if save:
-        plt.savefig(SAVE_DIR+'/figures/'+sn_band+'_mcmc.png')
+        plt.savefig(SAVE_DIR+'figures/'+sn_band+'_mcmc.png')
     # plt.show()
     
     
@@ -389,7 +389,7 @@ def plot_mcmc_results(x, y, yerr, fit, mc, r1=True, sn_band='test_g', save=True)
         flat_samples, labels=labels, truths=bestfit, truth_color='cornflowerblue')
     fig.suptitle(sn_band)
     if save:
-        plt.savefig(SAVE_DIR+'/figures/'+sn_band+'_mcmc_corner.png')
+        plt.savefig(SAVE_DIR+'figures/'+sn_band+'_mcmc_corner.png')
     # plt.show()
 
 # AUTOCORRELATION FUNCS

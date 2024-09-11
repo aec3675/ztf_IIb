@@ -13,3 +13,4 @@ temp/*
 **/ztf_clean
 ztf_clean/*
 cleaning/outputs/*flatchains*
+run_mcmc_script_copy.ipynb
