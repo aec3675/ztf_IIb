@@ -105,7 +105,7 @@ def export_combined_df(fp_df, atlas_df, SN_ID='temp', verbose=False, custom_path
         print(ztf_atlas_df)
 
     if len(custom_path)<2:
-        ztf_atlas_df.to_csv('./data/subselected_dfs/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
+        ztf_atlas_df.to_csv('./data/forced_phot_data/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
     else:
         ztf_atlas_df.to_csv(custom_path,index_label='index')
     return 
