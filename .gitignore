@@ -14,3 +14,4 @@ temp/*
 ztf_clean/*
 cleaning/outputs/*flatchains*
 make_plots.py
+run_mcmc_script_copy.ipynb
