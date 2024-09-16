@@ -193,7 +193,10 @@ def calc_prior(df_sub, r1_g=False, r1_r=True):
             "a2_l":a2_r_lower, "a2_u":a2_r_upper,
             "log_f_l":-4.0,"log_f_u":4.0}
     }
-    
+    print('a1_g, lower upper:', a1_g_lower, a1_g_upper)
+    print('a2_g, lower upper:', a2_g_lower, a2_g_upper)
+    print('a1_r, lower upper:', a1_r_lower, a1_r_upper)
+    print('a2_r, lower upper:', a2_r_lower, a2_r_upper,'\n')
     #output
     # print(prior_dict)
     return prior_dict
