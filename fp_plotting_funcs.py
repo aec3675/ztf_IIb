@@ -88,7 +88,7 @@ def read_in_data(file_path, data_source=''):
     return df
     
 
-def export_combined_df(fp_df, atlas_df, SN_ID='temp', verbose=False):
+def export_combined_df(fp_df, atlas_df, SN_ID='temp', verbose=False, custom_path='.'):
     times = np.concatenate((np.array(fp_df['jd']),np.array(atlas_df['JD'])),axis=None)
     filters = np.concatenate((np.array(fp_df['filter']),np.array(atlas_df['F'])),axis=None)
     mags = np.concatenate((np.array(fp_df['mag']),np.array(atlas_df['m'])),axis=None)
@@ -104,7 +104,10 @@ def export_combined_df(fp_df, atlas_df, SN_ID='temp', verbose=False):
     if verbose:
         print(ztf_atlas_df)
 
-    ztf_atlas_df.to_csv('./data/subselected_dfs/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
+    if len(custom_path)<2:
+        ztf_atlas_df.to_csv('./data/subselected_dfs/'+SN_ID+'_ztf_atlas_df.csv',index_label='index')
+    else:
+        ztf_atlas_df.to_csv(custom_path,index_label='index')
     return 
 
 
