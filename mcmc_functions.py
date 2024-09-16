@@ -456,7 +456,7 @@ def do_gw_autocorr_and_plot(mc, sn_band, save=False):
         plt.savefig(SAVE_DIR+'figures/'+sn_band+'_autocorr.png')
     # plt.show()
 
-def mp_fit_sne(idfb, plot=False):
+def mp_fit_sne(idfb, plot=True):
     str_sn,df,band,r1_bools,p0,pdict_ls = idfb
     print('ON SN : ', str_sn)
 
@@ -474,7 +474,7 @@ def mp_fit_sne(idfb, plot=False):
 
     if plot:
         #calc and plot autocorr values
-        do_gw_autocorr_and_plot(mc, save_name)
+        do_gw_autocorr_and_plot(mc, save_name, save=True)
 
         #plot mcmc fit over ztf data and corner plots
         plot_mcmc_results(x, y, yerr, fit, mc, r1=r1_bools, sn_band=save_name, save=True)
