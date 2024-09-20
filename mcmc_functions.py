@@ -354,7 +354,7 @@ def plot_mcmc_results(x, y, yerr, fit, mc, r1=True, sn_band='test_g', save=True)
     upper_bound = np.array(fit).T[0] + np.array(fit).T[2] #50th ptile + diff_84ptile
     
     plt.figure(figsize=(7,5))
-    x_plt = np.arange(1,40,0.01)
+    x_plt = np.arange(-5,30,0.01)
     if r1:
         bestfit_curve = np.array([model(bestfit, v, r1=True) for v in x_plt])
         lower_curve = np.array([model(lower_bound, v, r1=True) for v in x_plt])
