@@ -328,7 +328,7 @@ def mcmc_fit(x, y, yerr, priors, p0=[-2,2,-2,0,0,15,-2], r1=True, band='g', sn_n
             nwalkers, ndim, log_probability_combo, args=(x, y, yerr, p_dict, False), backend=backend)
     sampler.run_mcmc(pos, 1500000, progress=False)
     
-    flat_samples = sampler.get_chain(discard=100, thin=15, flat=True)
+    flat_samples = sampler.get_chain(discard=500, thin=30, flat=True)
     if save_flatchains:
         np.savetxt(SAVE_DIR+sn_name+'_flatchains.txt', flat_samples) #saves to github repo and not original dir
 
@@ -371,7 +371,7 @@ def plot_mcmc_results(x, y, yerr, fit, mc, r1=True, sn_band='test_g', save=True)
         plt.fill_between(x_plt, lower_curve, upper_curve, color='cornflowerblue', alpha=0.2)
         
     plt.errorbar(x, y, yerr, linestyle='', marker='o', color='black', label='') #ztf errors
-    plt.axvline(bestfit[-3],alpha=0.3, color='black', linestyle=(5, (10, 3)), zorder=50)
+    plt.axvline(bestfit[-3],alpha=0.3, color='black', linestyle='-', zorder=50)
     plt.axvline(bestfit[-2],alpha=0.3, color='black', linestyle=(5, (10, 3)), zorder=50)
     plt.gca().invert_yaxis()
     plt.xlim(-5,30)
@@ -386,7 +386,7 @@ def plot_mcmc_results(x, y, yerr, fit, mc, r1=True, sn_band='test_g', save=True)
     
     # CORNER PLOT #############################################
     plt.figure(figsize=(9,7))
-    flat_samples = mc.get_chain(discard=100, thin=15, flat=True)
+    flat_samples = mc.get_chain(discard=500, thin=30, flat=True)
     
     fig = corner.corner(
         flat_samples, labels=labels, truths=bestfit, truth_color='cornflowerblue')
